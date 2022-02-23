@@ -1,0 +1,72 @@
+<launch>
+  <arg name="custom_param_file" default="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/dummy.yaml"/>
+  <arg name="robot_namespace"   default="turtlebot"/>
+  <arg name="base_prefix"       default="mobile_base" />
+  <arg name="scan_topic"        default="scan"/>
+  <arg name="odom_frame_id"     default="odom"/>
+  <arg name="base_frame_id"     default="base_footprint"/>
+  <arg name="global_frame_id"   default="map"/>
+  <arg name="odom_topic"        default="odom"/>
+  <arg name="cmd_vel_topic"     default="cmd_vel"/>
+  <arg name="initial_pose_x"    default="0.0"/>
+  <arg name="initial_pose_y"    default="0.0"/>
+  <arg name="initial_pose_a"    default="0.0"/>
+  <arg name="include_fake_localization" default="false"/>
+  <arg name="nodes"             default="[high_level_planner, mid_level_planner, low_mid_level_planner, low_level_planner, recovery_server]"/>
+
+  <!-- High-level Planning using known map-->
+  <node pkg="flex_nav_planners" exec="flex_nav_planners_get_path_node" respawn="false" name="high_level_planner" output="screen">
+    <param from="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/high_level_planner_params.yaml" />
+    <param from="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/global_costmap_params.yaml" />
+    <param from="$(var custom_param_file)" />
+    <remap from="odom" to="$(var odom_topic)"/>
+    <remap from="scan" to="$(var scan_topic)"/>
+    <param name="global_costmap/global_frame"           value="$(var global_frame_id)"/>
+    <param name="global_costmap/robot_base_frame"       value="$(var base_frame_id)"/>
+  </node>
+
+  <!-- Mid-level planning with known map and local sensing-->
+  <node pkg="flex_nav_planners" exec="flex_nav_planners_follow_path_node" respawn="false" name="mid_level_planner" output="screen">
+    <param from="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/mid_level_planner_params.yaml" />
+    <param from="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/middle_costmap_params.yaml" />
+    <param from="$(var custom_param_file)" />
+    <param name="distance_threshold"                              value="0.0" />
+    <remap from="odom" to="$(var odom_topic)"/>
+    <remap from="scan" to="$(var scan_topic)"/>
+  </node>
+
+  <!-- Low-Mid-level planning with known map and local sensing-->
+  <node pkg="flex_nav_planners" exec="flex_nav_planners_follow_topic_node" respawn="false" name="low_mid_level_planner" output="screen">
+    <param from="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/low_mid_level_planner_params.yaml" />
+    <param from="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/low_middle_costmap_params.yaml" />
+    <param from="$(var custom_param_file)" />
+    <param name="distance_threshold"                              value="0.0" />
+    <remap from="odom" to="$(var odom_topic)"/>
+    <remap from="scan" to="$(var scan_topic)"/>
+  </node>
+
+  <!-- Path Follower Control -->
+  <node pkg="flex_nav_controllers" exec="flex_nav_controllers_follow_topic_node" respawn="false" name="low_level_planner" output="screen">
+    <param from="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/low_level_planner_params.yaml" />
+    <param from="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/local_costmap_params.yaml" />
+    <param from="$(var custom_param_file)" />
+    <param name="controller_frequency" value="10.0" />
+    <param name="planner" value="dwa_local_planner/DWAPlannerROS"/>
+    <remap from="odom" to="$(var odom_topic)"/>
+    <remap from="scan" to="$(var scan_topic)"/>
+    <remap from="cmd_vel" to="$(var cmd_vel_topic)"/>
+    <param name="local_costmap/global_frame"      value="$(var odom_frame_id)"/>
+    <param name="local_costmap/robot_base_frame"  value="$(var base_frame_id)"/>
+    <param name="DWAPlannerROS/global_frame_id"   value="$(var odom_frame_id)"/>
+  </node>
+
+  <!-- Recovery Server -->
+  <node pkg="flex_nav_recoveries" exec="flex_nav_recoveries_recovery_server_node" respawn="false" name="recovery_server" output="screen">
+    <param from="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/recovery_server.yaml" />
+  </node>
+  
+  <node pkg="nav2_lifecycle_manager" exec="lifecycle_manager" name="lifecycle_manager_navigation">
+    <param name="autostart"   value="true"/>
+    <param name="node_names"  value="$(var nodes)" />
+  </node>
+</launch>

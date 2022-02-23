@@ -1,0 +1,23 @@
+<package>
+  <name>flex_nav_turtlebot3_demo</name>
+  <version>0.0.1</version>
+  <description>
+    Meta-package for Turtlebot3 specific Flexible Navigation System demonstration
+  </description>
+  <author>David Conner</author>
+  <maintainer email="robotics@cnu.edu">David Conner</maintainer>
+  <license>BSD</license>
+  <url type="bugtracker">https://github.com/FlexBE/flex_nav_turtlebot3/issues</url>
+  <url type="repository">https://github.com/FlexBE/flex_nav_turtlebot3</url>
+  <url type="website">https://github.com/FlexBE/flex_nav_turtlebot3</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <run_depend>flexible_navigation</run_depend>
+  <run_depend>flex_nav_turtlebot3_demo_flexbe_behaviors</run_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>
