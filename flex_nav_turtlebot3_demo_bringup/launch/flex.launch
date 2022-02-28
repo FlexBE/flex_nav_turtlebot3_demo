@@ -1,17 +1,11 @@
 <launch>
   <arg name="custom_param_file" default="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/dummy.yaml"/>
-  <arg name="robot_namespace"   default="turtlebot"/>
-  <arg name="base_prefix"       default="mobile_base" />
   <arg name="scan_topic"        default="scan"/>
   <arg name="odom_frame_id"     default="odom"/>
   <arg name="base_frame_id"     default="base_footprint"/>
   <arg name="global_frame_id"   default="map"/>
   <arg name="odom_topic"        default="odom"/>
   <arg name="cmd_vel_topic"     default="cmd_vel"/>
-  <arg name="initial_pose_x"    default="0.0"/>
-  <arg name="initial_pose_y"    default="0.0"/>
-  <arg name="initial_pose_z"    default="0.0"/>
-  <arg name="include_fake_localization" default="false"/>
   <arg name="nodes"             default="[high_level_planner, low_level_planner, recovery_server]"/>
 
   <!-- Path Planning -->
@@ -29,8 +23,8 @@
   <node pkg="flex_nav_controllers" exec="flex_nav_controllers_follow_path_node" respawn="false" name="low_level_planner" output="screen">
     <param from="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/low_level_planner_params.yaml" />
     <param from="$(find-pkg-share flex_nav_turtlebot3_demo_bringup)/param/local_costmap_params.yaml" />
+    <param from="$(var custom_param_file)" />
     <param name="controller_frequency" value="10.0" />
-    <param from="$(var custom_param_file)" command="load" />
     <remap from="odom" to="$(var odom_topic)"/>
     <remap from="scan" to="$(var scan_topic)"/>
     <remap from="cmd_vel" to="$(var cmd_vel_topic)"/>
