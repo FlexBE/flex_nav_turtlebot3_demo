@@ -103,6 +103,16 @@ After startup, all control is through the FlexBE App operator interface and RViz
 
 Whenever a plan is being executed, the `FlexBE` state machine transitions to a concurrent node that uses on line  planners to refine the plans as the robot moves, and also monitors the Turtlebot bumper status for collision.  The operator can terminate the execution early by selecting the appropriate transition in the `FlexBE UI`.  If this low level plan fails, the robot will request permission to initiate a recovery behavior; in `full` autonomy the system automatically initiates the recovery.
 
+## Publications
+
+Please use the following publications for reference when using Flexible Navigation:
+
+- David C. Conner and Justin Willis, ["Flexible Navigation: Finite state machine-based integrated navigation and control for ROS enabled robots,"](http://dx.doi.org/10.1109/SECON.2017.7925266) SoutheastCon 2017.
+
+- Joshua Zutell, David C. Conner and Philipp Schillinger, "ROS 2-Based Flexible Behavior Engine for Flexible Navigation ," to appear, SoutheastCon 2022.
+
+---
+
 [ROS 2]: https://docs.ros.org/en/foxy/index.html
 [FlexBE]: https://flexbe.github.io
 [FlexBE App]: https://github.com/FlexBE/flexbe_app
