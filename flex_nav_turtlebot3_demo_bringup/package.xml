@@ -16,6 +16,9 @@
   <depend>flex_nav_planners</depend>
   <depend>flex_nav_controllers</depend>
   <depend>flex_nav_flexbe_states</depend>
+  <depend>turtlebot3</depend>
+  <depend>turtlebot3_gazebo</depend>
+  <depend>cartographer_ros</depend>
 
   <export>
     <build_type>ament_cmake</build_type>

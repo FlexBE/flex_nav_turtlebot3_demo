@@ -14,6 +14,8 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <run_depend>flexible_navigation</run_depend>
+  <run_depend>turtlebot3</run_depend>
+  <run_depend>turtlebot3_gazebo</run_depend>
   <run_depend>flex_nav_turtlebot3_demo_flexbe_behaviors</run_depend>
 
   <export>
