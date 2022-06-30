@@ -26,7 +26,7 @@ from launch.substitutions import ThisLaunchFileDir
 
 
 def generate_launch_description():
-    use_sim_time = LaunchConfiguration('use_sim_time', default='false')
+    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     flex_nav_turtlebot3_demo_bringup_prefix = get_package_share_directory('flex_nav_turtlebot3_demo_bringup')
     cartographer_config_dir = LaunchConfiguration('cartographer_config_dir', default=os.path.join(
                                                   flex_nav_turtlebot3_demo_bringup_prefix, 'config'))
@@ -36,7 +36,7 @@ def generate_launch_description():
     resolution = LaunchConfiguration('resolution', default='0.05')
     publish_period_sec = LaunchConfiguration('publish_period_sec', default='1.0')
 
-    rviz_config_dir = os.path.join(get_package_share_directory('flex_nav_turtlebot3_demo_bringup'),
+    rviz_config_dir = os.path.join(flex_nav_turtlebot3_demo_bringup_prefix,
                                    'rviz', 'tb3_flex_nav_demo.rviz')
 
     return LaunchDescription([
@@ -50,13 +50,13 @@ def generate_launch_description():
             description='Name of lua file for cartographer'),
         DeclareLaunchArgument(
             'use_sim_time',
-            default_value='false',
+            default_value=use_sim_time,
             description='Use simulation (Gazebo) clock if true'),
 
         Node(
             package='cartographer_ros',
-            node_executable='cartographer_node',
-            node_name='cartographer_node',
+            executable='cartographer_node',
+            name='cartographer_node',
             output='screen',
             parameters=[{'use_sim_time': use_sim_time}],
             arguments=['-configuration_directory', cartographer_config_dir,
@@ -80,8 +80,8 @@ def generate_launch_description():
 
         Node(
             package='rviz2',
-            node_executable='rviz2',
-            node_name='rviz2',
+            executable='rviz2',
+            name='rviz2',
             arguments=['-d', rviz_config_dir],
             parameters=[{'use_sim_time': use_sim_time}],
             output='screen'),

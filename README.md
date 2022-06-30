@@ -16,7 +16,7 @@ The quickest and easiest method to get a demonstration up and running is to foll
 
 1) Ensure that you are running a recent ROS 2 version
 
-  * This system is tested on `ros-foxy-desktop-full` on Ubuntu 20.04
+  * This system is tested on `ros-humble-desktop` on Ubuntu 22.04
   * See [ROS 2 Installation] for more information.
   * Make sure the `colcon` build and `rosdep` tools are installed
 
@@ -50,10 +50,10 @@ The quickest and easiest method to get a demonstration up and running is to foll
 
 7) Install required `nwjs` binaries for FlexBE
 
-After building with `colcon` and sourcing the new `setup.bash` as normally required, you must
-download the required `nwjs` binaries *before* you can run the FlexBE App:
+    After building with `colcon` and sourcing the new `setup.bash` as normally required, you must
+    download the required `nwjs` binaries *before* you can run the FlexBE App:
 
-    ros2 run flexbe_app nwjs_install
+    `ros2 run flexbe_app nwjs_install`
 
   > Note: These are installed in the `install` folder.  If the `install` folder is deleted, then the `nwjs` binaries
   will need to be reinstalled with this script.
@@ -61,6 +61,16 @@ download the required `nwjs` binaries *before* you can run the FlexBE App:
 
 ## Operation
 ---------
+
+> NOTE: In 29-June-2022 Humble release, an issue with Navigation 2 results in an
+> empty local costmap. As a fix, you can change the default DDS provider.  
+> We added the following lines to our setup.bash
+
+    <pre>
+    # Dealing with github.com/navigation2 #2489 and PR #3018
+    echo "Changing default DDS to Cyclone due to Nav 2 issue!"
+    export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    </pre>
 
 The following directions are for a simple demonstration of Flexible Navigation using [ROS 2 Cartographer] as the map.
 
@@ -121,6 +131,18 @@ Then start one (and only one) of the following launches that starts the planning
 
      *  The mid- and low-level planners run concurrently as they try to follow the global path defined by the high-level planner.
 
+ *or*
+
+ * `ros2 launch flex_nav_turtlebot3_demo_bringup flex_four_level.launch`
+     * This version uses a 4-level planner as a demonstration.
+       * The high-level planner is based only on the static map
+       * The mid-level planner using only local obstacle sensing
+       * The low-mid-level planner using only local obstacle sensing
+       * The low-level planner using the [ROS 2 Navigation2] DWBLocalPlanner
+
+     *  The mid- and low-level planners run concurrently as they try to follow the global path defined by the high-level planner.
+
+
 ### FlexBE Operation
 After startup, all control is through the FlexBE App operator interface and RViz.  
 
@@ -128,6 +150,7 @@ After startup, all control is through the FlexBE App operator interface and RViz
   * The behavior should match the flex launch started above.
     * 'flex.launch' --> `Turtlebot Flex Planner`
     * 'flex_multi_level.launch' --> `Turtlebot Multi Level Flex Planner`
+    * 'flex_four_level.launch' --> `Turtlebot Four-Level Flex Planner`
 
 * Examine (but don't modify yet!) the behavior using the `Statemachine Editor` button on FlexBE app
   * Click on a state to see the configurable parameters
@@ -165,7 +188,7 @@ Please use the following publications for reference when using Flexible Navigati
 
 - David C. Conner and Justin Willis, ["Flexible Navigation: Finite state machine-based integrated navigation and control for ROS enabled robots,"](http://dx.doi.org/10.1109/SECON.2017.7925266) SoutheastCon 2017.
 
-- Joshua Zutell, David C. Conner and Philipp Schillinger, "ROS 2-Based Flexible Behavior Engine for Flexible Navigation ," to appear, SouthEastCon 2022, April 2022.
+- Joshua Zutell, David C. Conner and Philipp Schillinger, ["ROS 2-Based Flexible Behavior Engine for Flexible Navigation ,"](http://dx.doi.org/10.1109/SoutheastCon48659.2022.9764047), SouthEastCon 2022, April 2022.
 
 ---
 

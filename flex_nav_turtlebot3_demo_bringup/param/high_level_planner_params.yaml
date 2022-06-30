@@ -4,6 +4,9 @@ high_level_planner:
     planner_plugin: 'GridBased'
     GridBased:
       plugin: 'nav2_navfn_planner/NavfnPlanner'
+      tolerance: 0.5
+      use_astar: false
+      allow_unknown: true
 
 high_level_planner_rclcpp_node:
   ros__parameters:
