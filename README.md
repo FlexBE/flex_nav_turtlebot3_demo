@@ -66,11 +66,11 @@ The quickest and easiest method to get a demonstration up and running is to foll
 > empty local costmap. As a fix, you can change the default DDS provider.  
 > We added the following lines to our setup.bash
 
-    <pre>
+<pre>
     # Dealing with github.com/navigation2 #2489 and PR #3018
     echo "Changing default DDS to Cyclone due to Nav 2 issue!"
     export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-    </pre>
+</pre>
 
 The following directions are for a simple demonstration of Flexible Navigation using [ROS 2 Cartographer] as the map.
 
@@ -180,15 +180,15 @@ The operator can terminate the execution early by selecting the appropriate tran
 If this low level plan fails, the robot will request permission to initiate a recovery behavior;
 in `full` autonomy the system automatically initiates the recovery.
 
-
+---
 
 ## Publications
 
 Please use the following publications for reference when using Flexible Navigation:
 
-- David C. Conner and Justin Willis, ["Flexible Navigation: Finite state machine-based integrated navigation and control for ROS enabled robots,"](http://dx.doi.org/10.1109/SECON.2017.7925266) SoutheastCon 2017.
+- David C. Conner and Justin Willis, ["Flexible Navigation: Finite state machine-based integrated navigation and control for ROS enabled robots,"](http://dx.doi.org/10.1109/SECON.2017.7925266) IEEE SoutheastCon 2017.
 
-- Joshua Zutell, David C. Conner and Philipp Schillinger, ["ROS 2-Based Flexible Behavior Engine for Flexible Navigation ,"](http://dx.doi.org/10.1109/SoutheastCon48659.2022.9764047), SouthEastCon 2022, April 2022.
+- Joshua Zutell, David C. Conner and Philipp Schillinger, ["ROS 2-Based Flexible Behavior Engine for Flexible Navigation ,"](http://dx.doi.org/10.1109/SoutheastCon48659.2022.9764047), IEEE SouthEastCon 2022.
 
 ---
 
