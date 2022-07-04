@@ -34,10 +34,12 @@ The quickest and easiest method to get a demonstration up and running is to foll
 
  > NOTE: If you are using the ROS wstools, you may add the following to your `.rosinstall` file, and then do `wstool merge` and `wstool update`.
 
-     - git: {local-name: src/flex_nav_turtlebot3_demo, uri: 'https://github.com/FlexBE/flex_nav_turtlebot3_demo.git', version: ros2-devel-alpha }
-     - git: {local-name: src/flexbe_app,               uri: 'https://github.com/FlexBE/flexbe_app.git',               version: ros2-devel-alpha }
-     - git: {local-name: src/flexbe_behavior_engine,   uri: 'https://github.com/FlexBE/flexbe_behavior_engine.git',   version: ros2-devel-alpha }
-     - git: {local-name: src/flexible_navigation,      uri: 'https://github.com/FlexBE/flexible_navigation.git',      version: ros2-devel-alpha }
+     - git: {local-name: src/flexbe_app,               uri: 'https://github.com/CNURobotics/flexbe_app.git',                version: humble-sync-rework }
+     - git: {local-name: src/flexible_navigation,      uri: 'https://github.com/CNURobotics/flexible_navigation.git',       version: humble-sync-rework }
+     - git: {local-name: src/flexbe_behavior_engine,   uri: 'https://github.com/CNURobotics/flexbe_behavior_engine.git',    version: humble-sync-rework }
+     - git: {local-name: src/flex_nav_turtlebot3_demo, uri: 'https://github.com/CNURobotics/flex_nav_turtlebot3_demo.git',  version: ros2-devel-alpha }
+
+  > NOTE: These repos are currently listed as the latest shared development repos on CNURobotics, and not the official FlexBE versions.
 
 4) Install any required dependencies.
 
