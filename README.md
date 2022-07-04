@@ -118,14 +118,14 @@ Flexible Navigation requires startup of planning and control nodes, as well as t
 
 Then start one (and only one) of the following launches that starts the planning and control nodes:
 
- * `ros2 launch flex_nav_turtlebot3_demo_bringup flex.launch`
+ * `ros2 launch flex_nav_turtlebot3_demo_bringup flex.launch.py`
      * This version uses a 2-level planner as a demonstration.
        * The global planner plans over the full map, with sensor data
        * The local planner plans over smaller window trying to follow the global path
 
  *or*
 
- * `ros2 launch flex_nav_turtlebot3_demo_bringup flex_multi_level.launch`
+ * `ros2 launch flex_nav_turtlebot3_demo_bringup flex_multi_level.launch.py`
      * This version uses a 3-level planner as a demonstration.
        * The high-level planner is based only on the static map
        * The mid-level planner using only local obstacle sensing
@@ -135,7 +135,7 @@ Then start one (and only one) of the following launches that starts the planning
 
  *or*
 
- * `ros2 launch flex_nav_turtlebot3_demo_bringup flex_four_level.launch`
+ * `ros2 launch flex_nav_turtlebot3_demo_bringup flex_four_level.launch.py`
      * This version uses a 4-level planner as a demonstration.
        * The high-level planner is based only on the static map
        * The mid-level planner using only local obstacle sensing
