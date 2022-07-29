@@ -1,0 +1,13 @@
+high_level_planner:
+  ros__parameters:
+    expected_planner_frequency: 20.0
+    planner_plugin: 'GridBased'
+    GridBased:
+      plugin: 'nav2_navfn_planner/NavfnPlanner'
+      tolerance: 0.5
+      use_astar: false
+      allow_unknown: true
+
+high_level_planner_rclcpp_node:
+  ros__parameters:
+    use_sim_time: True

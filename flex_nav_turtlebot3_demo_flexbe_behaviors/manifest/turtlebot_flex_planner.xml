@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Turtlebot Flex Planner">
+
+	<executable package_path="flex_nav_turtlebot3_demo_flexbe_behaviors.turtlebot_flex_planner_sm" class="TurtlebotFlexPlannerSM" />
+	<tagstring>Flex_Nav</tagstring>
+	<author>Josh Zutell</author>
+	<date>Sat Jan 15 2022</date>
+	<description>
+		Uses Flexible Navigation to control the Turtlebot robot
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>

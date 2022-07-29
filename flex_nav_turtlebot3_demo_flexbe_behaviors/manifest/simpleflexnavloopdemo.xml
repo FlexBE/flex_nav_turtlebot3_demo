@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="SimpleFlexNavLoopDemo">
+
+	<executable package_path="flex_nav_turtlebot3_demo_flexbe_behaviors.simpleflexnavloopdemo_sm" class="SimpleFlexNavLoopDemoSM" />
+	<tagstring></tagstring>
+	<author>Josh Zutell</author>
+	<date>Mon Oct 25 2021</date>
+	<description>
+		A simple demo using Flexible Navigation states to navigation a TurtleBot3 in a loop
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>
