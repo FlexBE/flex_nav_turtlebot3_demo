@@ -34,12 +34,12 @@ The quickest and easiest method to get a demonstration up and running is to foll
 
  > NOTE: If you are using the ROS wstools, you may add the following to your `.rosinstall` file, and then do `wstool merge` and `wstool update`.
 
-     - git: {local-name: src/flexbe_app,               uri: 'https://github.com/CNURobotics/flexbe_app.git',                version: humble-sync-rework }
-     - git: {local-name: src/flexible_navigation,      uri: 'https://github.com/CNURobotics/flexible_navigation.git',       version: humble-sync-rework }
-     - git: {local-name: src/flexbe_behavior_engine,   uri: 'https://github.com/CNURobotics/flexbe_behavior_engine.git',    version: humble-sync-rework }
-     - git: {local-name: src/flex_nav_turtlebot3_demo, uri: 'https://github.com/CNURobotics/flex_nav_turtlebot3_demo.git',  version: ros2-devel-alpha }
+     - git: {local-name: src/flexbe_app,               uri: 'https://github.com/FlexBE/flexbe_app.git',                version: ros2-devel }
+     - git: {local-name: src/flexible_navigation,      uri: 'https://github.com/FlexBE/flexible_navigation.git',       version: ros2-devel }
+     - git: {local-name: src/flexbe_behavior_engine,   uri: 'https://github.com/FlexBE/flexbe_behavior_engine.git',    version: ros2-devel }
+     - git: {local-name: src/flex_nav_turtlebot3_demo, uri: 'https://github.com/FlexBE/flex_nav_turtlebot3_demo.git',  version: ros2-devel }
 
-  > NOTE: These repos are currently listed as the latest shared development repos on CNURobotics, and not the official FlexBE versions.
+  > NOTE: These repo branches are currently listed as the latest official development branches.
 
 4) Install any required dependencies.
 
@@ -69,9 +69,9 @@ The quickest and easiest method to get a demonstration up and running is to foll
 > We added the following lines to our setup.bash
 
 <pre>
-    # Dealing with github.com/navigation2 #2489 and PR #3018
-    echo "Changing default DDS to Cyclone due to Nav 2 issue!"
-    export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+  # Dealing with https://github.com/ros-planning/navigation2/issues/3014 (2489 and 3018)
+  echo "Changing default DDS to Cyclone due to Nav 2 issue!"
+  export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 </pre>
 
 The following directions are for a simple demonstration of Flexible Navigation using [ROS 2 Cartographer] as the map.
