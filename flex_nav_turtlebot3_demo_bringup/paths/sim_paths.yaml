@@ -1,0 +1,99 @@
+empty:
+    frame_id: 'map'
+    poses: []
+
+sim_loop: # Demo path with 1 pose specified
+    frame_id: 'map'
+    poses:
+        -   frame_id: ''  # Optional, will use one given above if missing or empty
+            position:
+                x: -2.0
+                y:  0.0
+                z:  0.0  # z-value is optional (z=0.0 by default)
+            orientation: # Orientation is optional (just defaults to identity)
+                w: 1.0
+                x: 0.0
+                y: 0.0
+                z: 0.0
+        -   position:
+                x: -1.6
+                y:  1.0
+        -   position:
+                x: -1.2
+                y:  1.5
+        -   position:
+                x:  1.2
+                y:  1.5
+        -   position:
+                x:  1.6
+                y:  1.0
+        -   position:
+                x:  1.6
+                y: -1.0
+        -   position:
+                x:  1.2
+                y: -1.5
+        -   position:
+                x: -1.2
+                y: -1.5
+        -   position:
+                x: -1.6
+                y: -1.0
+sim_patrol: # Demo path
+    frame_id: 'map'
+    poses:
+        -   frame_id: ''  # Optional, will use one given above if missing or empty
+            position:
+                x: -2.0
+                y:  0.0
+                z:  0.0  # z-value is optional (z=0.0 by default)
+            orientation: # Orientation is optional (just defaults to identity)
+                w: 1.0
+                x: 0.0
+                y: 0.0
+                z: 0.0
+        -   position:
+                x: -1.6
+                y:  1.0
+        -   position:
+                x: -1.2
+                y:  1.5
+        -   position:
+                x: -0.7
+                y:  1.5
+        -   position:
+                x: -0.5
+                y:  1.1
+        -   position:
+                x: -0.5
+                y: -1.1
+        -   position:
+                x:  0.0
+                y: -1.5
+        -   position:
+                x:  0.3
+                y: -1.2
+        -   position:
+                x:  0.5
+                y: -1.0
+        -   position:
+                x:  0.5
+                y:  1.0
+        -   position:
+                x:  1.0
+                y:  1.5
+        -   position:
+                x:  1.7
+                y:  1.0
+        -   position:
+                x:  1.7
+                y: -1.0
+        -   position:
+                x:  1.2
+                y: -1.6
+        -   position:
+                x: -1.2
+                y: -1.6
+        -   position:
+                x: -1.6
+                y: -1.0

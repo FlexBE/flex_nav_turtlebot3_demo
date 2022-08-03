@@ -85,8 +85,8 @@ The following directions are for a simple demonstration of Flexible Navigation u
 `ros2 launch turtlebot3_gazebo turtlebot3_world.launch.py`
  * Starts the simulated environment of the ROBOTIS Turtlebot3 world with the simulated Turtlebot3
 
-### Start map server
- With an unknown map, ROS 2 Cartographer will build a map of the simulated environment
+### Start localization
+ With an unknown map, ROS 2 Cartographer will build a SLAM map of the simulated environment
 
  `ros2 launch flex_nav_turtlebot3_demo_bringup cartographer.launch.py use_sim_time:=True`
 
@@ -95,12 +95,22 @@ The following directions are for a simple demonstration of Flexible Navigation u
   * Sets use_sim_time to true instead of the robot running in real time
   * Again, be sure `TURTLEBOT3_MODEL` is set!
 
+*or*
+
+ AMCL can be used to perform localization relative to known map
+
+ `ros2 launch flex_nav_turtlebot3_demo_bringup amcl.launch.py use_sim_time:=True`
+
 ### Visualization
 
- RViz is started alongside ROS 2 Cartographer with the previous command
+
+ With AMCL, you need to start RViz separately.  
+ For the pure pursuit demo below, use
+ `ros2 launch flex_nav_turtlebot3_demo_bringup rviz_pure_pursuit.launch.py use_sim_time:=True`
 
  Displays a standard view of transforms of Turtlebot3, sensor data, with maps, and paths displayed
 
+ RViz is started alongside ROS 2 Cartographer with the previous command.
  This custom version adds the follow robot model, path, and global cost map to the default cartographer setup.
 
   * A `Path` to the RViz display and set the topic to `/high_level_planner/plan`
@@ -144,7 +154,15 @@ Then start one (and only one) of the following launches that starts the planning
 
      *  The mid- and low-level planners run concurrently as they try to follow the global path defined by the high-level planner.
 
+ *or*
 
+ * `ros2 launch flex_nav_turtlebot3_demo_bringup pure_pursuit.launch.py`
+     * This version loads a defined patrol path based on static map
+     * Be sure to use `amcl.launch.py` for localization relative to known map locations for this demo
+     * The system uses basic pure pursuit path following node.
+     * This demo does NOT have obstacle avoidance, and is mainly to demonstrate `GetPathByName` and `PurePursuit` nodes.
+     * See CHANGELOG.rst for limitations of this demo
+     
 ### FlexBE Operation
 After startup, all control is through the FlexBE App operator interface and RViz.  
 
@@ -153,6 +171,7 @@ After startup, all control is through the FlexBE App operator interface and RViz
     * 'flex.launch' --> `Turtlebot Flex Planner`
     * 'flex_multi_level.launch' --> `Turtlebot Multi Level Flex Planner`
     * 'flex_four_level.launch' --> `Turtlebot Four-Level Flex Planner`
+    * 'pure_pursuit.launch' --> `Turtlebot Pure Pursuit Patrol`
 
 * Examine (but don't modify yet!) the behavior using the `Statemachine Editor` button on FlexBE app
   * Click on a state to see the configurable parameters

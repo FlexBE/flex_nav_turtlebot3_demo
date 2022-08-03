@@ -30,4 +30,9 @@ install(DIRECTORY config
         DESTINATION share/${PROJECT_NAME}
 )
 
+install(DIRECTORY paths
+        DESTINATION share/${PROJECT_NAME}
+)
+
+
 ament_package()
