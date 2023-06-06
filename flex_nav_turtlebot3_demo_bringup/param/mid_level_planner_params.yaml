@@ -1,7 +1,8 @@
 mid_level_planner:
   ros__parameters:
     expected_planner_frequency: 20.0
-    distance_threshold: 5.0
+    lookahead_distance: 2.0    # Distance in meters along path from robot for planner target
+    distance_threshold: 0.125  # Distance in meters from final position to determine success
     planner_plugin: 'GridBased'
     GridBased:
       plugin: 'nav2_navfn_planner/NavfnPlanner'

@@ -1,6 +1,7 @@
 high_level_planner:
   ros__parameters:
     expected_planner_frequency: 20.0
+    distance_threshold: 0.25   # Distance in meters from final position to determine success
     planner_plugin: 'GridBased'
     GridBased:
       plugin: 'nav2_navfn_planner/NavfnPlanner'
