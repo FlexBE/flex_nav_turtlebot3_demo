@@ -34,5 +34,9 @@ install(DIRECTORY paths
         DESTINATION share/${PROJECT_NAME}
 )
 
+install(PROGRAMS
+  scripts/fake_localization
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 ament_package()

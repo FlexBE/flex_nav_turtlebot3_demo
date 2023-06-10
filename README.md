@@ -101,17 +101,47 @@ The following directions are for a simple demonstration of Flexible Navigation u
 
  `ros2 launch flex_nav_turtlebot3_demo_bringup amcl.launch.py use_sim_time:=True`
 
+*or*
+
+ Fake localization can be used to define localization given ground truth from simulation
+
+ `ros2 launch flex_nav_turtlebot3_demo_bringup fake.launch.py use_sim_time:=True`
+
+> Note: Fake localization requires a version of the turtlebot3 `model.sdf` that includes
+<pre>
+    <!-- publish ground truth -->
+    <plugin name="turtlebot3_ground_truth" filename="libgazebo_ros_p3d.so">
+        <always_on>true</always_on>
+        <update_rate>50.0</update_rate>
+        <body_name>base_footprint</body_name>
+        <gaussian_noise>0.001</gaussian_noise>
+        <frame_name>world</frame_name>
+        <xyz_offset>0 0 0</xyz_offset>
+        <rpy_offset>0 0 0</rpy_offset>
+        <ros>
+          <!--https://github.com/ros-simulation/gazebo_ros_pkgs/issues/1318-->
+          <remapping>odom:=ground_truth</remapping>
+        </ros>
+    </plugin>
+</pre>
+
+
 ### Visualization
 
 
- With AMCL, you need to start RViz separately.  
- For the pure pursuit demo below, use
+ Start RViz separately.  
+
+ For the basic demos, use
+ 
+ `ros2 launch flex_nav_turtlebot3_demo_bringup rviz_flex_nav_demo.launch.py use_sim_time:=True`
+
+ For the pure pursuit demos, use
+
  `ros2 launch flex_nav_turtlebot3_demo_bringup rviz_pure_pursuit.launch.py use_sim_time:=True`
 
  Displays a standard view of transforms of Turtlebot3, sensor data, with maps, and paths displayed
 
- RViz is started alongside ROS 2 Cartographer with the previous command.
- This custom version adds the follow robot model, path, and global cost map to the default cartographer setup.
+ These custom versions adds the follow robot model, path, and global cost map to the default setup.
 
   * A `Path` to the RViz display and set the topic to `/high_level_planner/plan`
   * A `RobotModel` (uses the `/robot_description` topic)
@@ -125,6 +155,7 @@ Flexible Navigation requires startup of planning and control nodes, as well as t
 `ros2 launch flexbe_app flexbe_full.launch.py`
 
   * This starts the FlexBE behavior engine and FlexBE App UI
+  * Be sure that `nwjs` is installed after first build using `ros2 run flexbe_app nwjs_install`
 
 Then start one (and only one) of the following launches that starts the planning and control nodes:
 

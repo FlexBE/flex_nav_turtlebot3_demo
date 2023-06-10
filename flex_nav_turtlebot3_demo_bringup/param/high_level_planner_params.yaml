@@ -1,6 +1,7 @@
 high_level_planner:
   ros__parameters:
-    expected_planner_frequency: 20.0
+    expected_planner_frequency: 1.0
+    set_orientation: True  # Set intermediate orientations along path from simple 2D planner
     distance_threshold: 0.25   # Distance in meters from final position to determine success
     planner_plugin: 'GridBased'
     GridBased:

@@ -1,6 +1,7 @@
 low_mid_level_planner:
   ros__parameters:
     expected_planner_frequency: 20.0
+    set_orientation: True      # Set intermediate orientations along path from simple 2D planner
     lookahead_distance: 1.0    # Distance in meters along path from robot for planner target
     distance_threshold: 0.05   # Distance in meters from final position to determine success
     planner_plugin: 'GridBased'
