@@ -25,19 +25,19 @@ from flexbe_states.operator_decision_state import OperatorDecisionState
 Created on Sat Jan 15 2022
 @author: Josh Zutell
 '''
-class TurtlebotFourLevelFlexPlannerSM(Behavior):
+class Turtlebot3FourLevelFlexPlannerSM(Behavior):
 	'''
-	Uses Flexible Navigation to control the Turtlebot robot with 4-level planning.
-high-level: Map only
-first-mid-level: Smaller map area with sensors
-second-mid-level: Receives map from first-mid-level and performs another planning
-low-level: sensors only
+	Uses Flexible Navigation to control the Turtlebot 3 robot with 4-level planning.
+		high-level: Map only
+		middle-level: Smaller map area with sensors
+		low-mid-level: Receives map from middle-level and performs another planning
+		low-level: sensors only
 	'''
 
 
 	def __init__(self, node):
-		super(TurtlebotFourLevelFlexPlannerSM, self).__init__()
-		self.name = 'Turtlebot Four-Level Flex Planner'
+		super(Turtlebot3FourLevelFlexPlannerSM, self).__init__()
+		self.name = 'Turtlebot3 Four-Level Flex Planner'
 
 		# parameters of this behavior
 

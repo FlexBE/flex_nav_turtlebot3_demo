@@ -9,7 +9,8 @@
 
 from flexbe_core import Behavior, Autonomy, OperatableStateMachine, ConcurrencyContainer, PriorityContainer, Logger
 from flex_nav_flexbe_states.clear_costmaps_state import ClearCostmapsState
-from flex_nav_flexbe_states.follow_path_state import FollowPathState
+from flex_nav_flexbe_states.follow_planner_state import FollowPlannerState
+from flex_nav_flexbe_states.follow_topic_state import FollowTopicState
 from flex_nav_flexbe_states.get_path_state import GetPathState
 from flex_nav_flexbe_states.get_pose_state import GetPoseState
 from flexbe_states.log_state import LogState
@@ -24,15 +25,18 @@ from flexbe_states.operator_decision_state import OperatorDecisionState
 Created on Sat Jan 15 2022
 @author: Josh Zutell
 '''
-class TurtlebotFlexPlannerSM(Behavior):
+class Turtlebot3MultiLevelFlexPlannerSM(Behavior):
 	'''
-	Uses Flexible Navigation to control the Turtlebot robot
+	Uses Flexible Navigation to control the Turtlebot 3 robot with 3-level planning.
+		high-level: Map only
+		mid-level: Smaller map area with sensors
+		low-level: sensors only controller to follow mid-level path
 	'''
 
 
 	def __init__(self, node):
-		super(TurtlebotFlexPlannerSM, self).__init__()
-		self.name = 'Turtlebot Flex Planner'
+		super(Turtlebot3MultiLevelFlexPlannerSM, self).__init__()
+		self.name = 'Turtlebot3 Multi-Level Flex Planner'
 
 		# parameters of this behavior
 
@@ -42,7 +46,8 @@ class TurtlebotFlexPlannerSM(Behavior):
 		PriorityContainer.initialize_ros(node)
 		Logger.initialize(node)
 		ClearCostmapsState.initialize_ros(node)
-		FollowPathState.initialize_ros(node)
+		FollowPlannerState.initialize_ros(node)
+		FollowTopicState.initialize_ros(node)
 		GetPathState.initialize_ros(node)
 		GetPoseState.initialize_ros(node)
 		LogState.initialize_ros(node)
@@ -58,13 +63,38 @@ class TurtlebotFlexPlannerSM(Behavior):
 
 
 	def create(self):
-		# x:943 y:286, x:1073 y:20
+		# x:880 y:312, x:1163 y:18
 		_state_machine = OperatableStateMachine(outcomes=['finished', 'failed'])
 
 		# Additional creation code can be added inside the following tags
 		# [MANUAL_CREATE]
 
 		# [/MANUAL_CREATE]
+
+		# x:424 y:58, x:407 y:123, x:413 y:197, x:564 y:309, x:552 y:388, x:557 y:453, x:189 y:520, x:45 y:524, x:123 y:521
+		_sm_container_0 = ConcurrencyContainer(outcomes=['finished', 'failed', 'canceled'], input_keys=['plan'], conditions=[
+										('finished', [('MidLevel', 'done')]),
+										('finished', [('LowLevel', 'done')]),
+										('canceled', [('MidLevel', 'canceled')]),
+										('failed', [('MidLevel', 'failed')]),
+										('failed', [('LowLevel', 'failed')]),
+										('canceled', [('LowLevel', 'canceled')])
+										])
+
+		with _sm_container_0:
+			# x:109 y:63
+			OperatableStateMachine.add('MidLevel',
+										FollowPlannerState(topic="mid_level_planner"),
+										transitions={'done': 'finished', 'failed': 'failed', 'canceled': 'canceled'},
+										autonomy={'done': Autonomy.Off, 'failed': Autonomy.Off, 'canceled': Autonomy.Off},
+										remapping={'plan': 'plan'})
+
+			# x:299 y:331
+			OperatableStateMachine.add('LowLevel',
+										FollowTopicState(planner_topic="mid_level_planner/plan", controller_topic="low_level_planner"),
+										transitions={'done': 'finished', 'failed': 'failed', 'canceled': 'canceled'},
+										autonomy={'done': Autonomy.Off, 'failed': Autonomy.Off, 'canceled': Autonomy.Off})
+
 
 
 		with _state_machine:
@@ -74,23 +104,23 @@ class TurtlebotFlexPlannerSM(Behavior):
 										transitions={'done': 'Receive Goal', 'failed': 'failed'},
 										autonomy={'done': Autonomy.Off, 'failed': Autonomy.Off})
 
+			# x:446 y:337
+			OperatableStateMachine.add('Container',
+										_sm_container_0,
+										transitions={'finished': 'Log Success', 'failed': 'AutoReplan', 'canceled': 'Continue'},
+										autonomy={'finished': Autonomy.Inherit, 'failed': Autonomy.Inherit, 'canceled': Autonomy.Inherit},
+										remapping={'plan': 'plan'})
+
 			# x:435 y:146
 			OperatableStateMachine.add('Continue',
 										OperatorDecisionState(outcomes=["yes","no","clearcostmap"], hint="Continue planning to new goal?", suggestion="yes"),
 										transitions={'yes': 'Receive Goal', 'no': 'finished', 'clearcostmap': 'ClearCostmap'},
 										autonomy={'yes': Autonomy.High, 'no': Autonomy.Full, 'clearcostmap': Autonomy.Full})
 
-			# x:435 y:299
-			OperatableStateMachine.add('Execute Path',
-										FollowPathState(topic="low_level_planner"),
-										transitions={'done': 'Log Success', 'failed': 'AutoReplan', 'canceled': 'Continue'},
-										autonomy={'done': Autonomy.Off, 'failed': Autonomy.Off, 'canceled': Autonomy.Off},
-										remapping={'plan': 'plan'})
-
-			# x:194 y:301
+			# x:218 y:342
 			OperatableStateMachine.add('ExecutePlan',
 										OperatorDecisionState(outcomes=["yes","no"], hint="Execute the current plan?", suggestion="yes"),
-										transitions={'yes': 'Execute Path', 'no': 'Continue'},
+										transitions={'yes': 'Container', 'no': 'Continue'},
 										autonomy={'yes': Autonomy.High, 'no': Autonomy.Full})
 
 			# x:960 y:70
@@ -99,16 +129,16 @@ class TurtlebotFlexPlannerSM(Behavior):
 										transitions={'done': 'New Plan'},
 										autonomy={'done': Autonomy.Off})
 
-			# x:708 y:293
+			# x:703 y:336
 			OperatableStateMachine.add('Log Success',
 										LogState(text="Success!", severity=Logger.REPORT_HINT),
 										transitions={'done': 'Continue'},
 										autonomy={'done': Autonomy.Off})
 
-			# x:728 y:65
+			# x:772 y:71
 			OperatableStateMachine.add('New Plan',
 										GetPathState(planner_topic="high_level_planner"),
-										transitions={'planned': 'Execute Path', 'empty': 'Receive Goal', 'failed': 'Continue'},
+										transitions={'planned': 'Container', 'empty': 'Receive Goal', 'failed': 'Continue'},
 										autonomy={'planned': Autonomy.Off, 'empty': Autonomy.Off, 'failed': Autonomy.Off},
 										remapping={'goal': 'goal', 'plan': 'plan'})
 

@@ -24,15 +24,16 @@ from flexbe_states.operator_decision_state import OperatorDecisionState
 Created on Mon 1-Aug-2022
 @author: David Conner
 '''
-class TurtlebotPurePursuitPatrolSM(Behavior):
+class Turtlebot3PurePursuitPatrolSM(Behavior):
 	'''
-	Uses Flexible Navigation to control the Turtlebot robot using basic pure pursuit and pre-defined paths.  Demonstrates using a PurePursuitState where FlexBE published command and FollowPath state using a PurePursuitPath node.
+	Uses Flexible Navigation to control the Turtlebot 3 robot using basic pure pursuit and pre-defined paths.  
+	Demonstrates using a PurePursuitState where FlexBE published command and FollowPath state using a PurePursuitPath node.
 	'''
 
 
 	def __init__(self, node):
-		super(TurtlebotPurePursuitPatrolSM, self).__init__()
-		self.name = 'Turtlebot Pure Pursuit Patrol'
+		super(Turtlebot3PurePursuitPatrolSM, self).__init__()
+		self.name = 'Turtlebot3 Pure Pursuit Patrol'
 
 		# parameters of this behavior
 

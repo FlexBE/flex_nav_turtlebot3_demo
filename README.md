@@ -124,7 +124,7 @@ The following directions are for a simple demonstration of Flexible Navigation u
         </ros>
     </plugin>
 </pre>
-
+See https://github.com/ROBOTIS-GIT/turtlebot3_simulations/pull/201 for details.
 
 ### Visualization
 
@@ -199,16 +199,15 @@ After startup, all control is through the FlexBE App operator interface and RViz
 
 * First load the desired behavior through the `FlexBE Behavior Dashboard` tab.
   * The behavior should match the flex launch started above.
-    * 'flex.launch' --> `Turtlebot Flex Planner`
-    * 'flex_multi_level.launch' --> `Turtlebot Multi Level Flex Planner`
-    * 'flex_four_level.launch' --> `Turtlebot Four-Level Flex Planner`
-    * 'pure_pursuit.launch' --> `Turtlebot Pure Pursuit Patrol`
+    * 'flex.launch' --> `Turtlebot3 Flex Planner`
+    * 'flex_multi_level.launch' --> `Turtlebot3 Multi Level Flex Planner`
+    * 'flex_four_level.launch' --> `Turtlebot3 Four-Level Flex Planner`
+    * 'pure_pursuit.launch' --> `Turtlebot3 Pure Pursuit Patrol`
 
 * Examine (but don't modify yet!) the behavior using the `Statemachine Editor` button on FlexBE app
   * Click on a state to see the configurable parameters
 
 * Execute the behavior via the `FlexBE Runtime Control` tab.
-  * Click `Connect` to establish the initial connection between App and Onboard Behavior Engine
   * Then `Start Execution`
 
 * The system requires the operator to input a `2D Nav Goal` via the `RViz` screen
