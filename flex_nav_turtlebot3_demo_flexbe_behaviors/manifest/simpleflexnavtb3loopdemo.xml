@@ -2,17 +2,17 @@
 
 <behavior name="SimpleFlexNavTB3LoopDemo">
 
-	<executable package_path="flex_nav_turtlebot3_demo_flexbe_behaviors.simpleflexnavtb3loopdemo_sm" class="SimpleFlexNavTB3LoopDemoSM" />
-	<tagstring></tagstring>
-	<author>Josh Zutell</author>
-	<date>Mon Oct 25 2021</date>
-	<description>
-		A simple demo using Flexible Navigation states to navigation a TurtleBot3 in a loop
-	</description>
+    <executable package_path="flex_nav_turtlebot3_demo_flexbe_behaviors.simpleflexnavtb3loopdemo_sm" class="SimpleFlexNavTB3LoopDemoSM" />
+    <tagstring></tagstring>
+    <author>Josh Zutell</author>
+    <date>Mon Oct 25 2021</date>
+    <description>
+        A simple demo using Flexible Navigation states to navigation a TurtleBot3 in a loop
+    </description>
 
 
-	<!-- Contained Behaviors -->
+    <!-- Contained Behaviors -->
 
-	<!-- Available Parameters -->
+    <!-- Available Parameters -->
 
 </behavior>

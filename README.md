@@ -108,7 +108,8 @@ The following directions are for a simple demonstration of Flexible Navigation u
  `ros2 launch flex_nav_turtlebot3_demo_bringup fake.launch.py use_sim_time:=True`
 
 > Note: Fake localization requires a version of the turtlebot3 `model.sdf` that includes
-<pre>
+
+```xml
     <!-- publish ground truth -->
     <plugin name="turtlebot3_ground_truth" filename="libgazebo_ros_p3d.so">
         <always_on>true</always_on>
@@ -123,7 +124,8 @@ The following directions are for a simple demonstration of Flexible Navigation u
           <remapping>odom:=ground_truth</remapping>
         </ros>
     </plugin>
-</pre>
+```
+
 See https://github.com/ROBOTIS-GIT/turtlebot3_simulations/pull/201 for details.
 
 ### Visualization
@@ -152,48 +154,83 @@ See https://github.com/ROBOTIS-GIT/turtlebot3_simulations/pull/201 for details.
 
 Flexible Navigation requires startup of planning and control nodes, as well as the FlexBE behavior engine and UI.
 
-`ros2 launch flexbe_app flexbe_full.launch.py`
+> Note: After a clean build, be sure that `nwjs` is installed by using `ros2 run flexbe_app nwjs_install`
 
-  * This starts the FlexBE behavior engine and FlexBE App UI
-  * Be sure that `nwjs` is installed after first build using `ros2 run flexbe_app nwjs_install`
+Three options:
+
+----
+
+To launch all of Flexbe -- Onboard Behavior Executive and Operator Control Station -- in one terminal use
+
+`ros2 launch flexbe_app flexbe_full.launch.py use_sim_time:=True`
+
+*or*
+
+to launch onboard and OCS in two separate terminals use:
+
+`ros2 launch flexbe_onboard behavior_onboard.launch.py use_sim_time:=True`
+
+`ros2 launch flexbe_app flexbe_ocs.launch.py use_sim_time:=True`
+
+*or*
+
+to launch each component separately in their own terminal, use
+
+`ros2 launch flexbe_onboard behavior_onboard.launch.py use_sim_time:=True`
+
+`ros2 run flexbe_mirror behavior_mirror_sm --ros-args --remap __node:="behavior_mirror" -p use_sim_time:=True`
+
+`ros2 run flexbe_widget be_launcher --ros-args --remap name:="behavior_launcher" -p use_sim_time:=True`
+
+`ros2 run flexbe_app run_app --ros-args --remap name:="flexbe_app" -p use_sim_time:=True`
+
+These commands start the onboard FlexBE behavior engine and FlexBE App UI and other components
+
+----
 
 Then start one (and only one) of the following launches that starts the planning and control nodes:
 
- * `ros2 launch flex_nav_turtlebot3_demo_bringup flex.launch.py`
-     * This version uses a 2-level planner as a demonstration.
-       * The global planner plans over the full map, with sensor data
-       * The local planner plans over smaller window trying to follow the global path
+
+`ros2 launch flex_nav_turtlebot3_demo_bringup flex.launch.py`
+
+  * This version uses a 2-level planner as a demonstration.
+    * The global planner plans over the full map, with sensor data
+    * The local planner plans over smaller window trying to follow the global path
 
  *or*
 
- * `ros2 launch flex_nav_turtlebot3_demo_bringup flex_multi_level.launch.py`
-     * This version uses a 3-level planner as a demonstration.
-       * The high-level planner is based only on the static map
-       * The mid-level planner using only local obstacle sensing
-       * The low-level planner using the [ROS 2 Navigation2] DWBLocalPlanner
+`ros2 launch flex_nav_turtlebot3_demo_bringup flex_multi_level.launch.py`
 
-     *  The mid- and low-level planners run concurrently as they try to follow the global path defined by the high-level planner.
+  * This version uses a 3-level planner as a demonstration.
+    * The high-level planner is based only on the static map
+    * The mid-level planner using only local obstacle sensing
+    * The low-level planner using the [ROS 2 Navigation2] DWBLocalPlanner
 
- *or*
-
- * `ros2 launch flex_nav_turtlebot3_demo_bringup flex_four_level.launch.py`
-     * This version uses a 4-level planner as a demonstration.
-       * The high-level planner is based only on the static map
-       * The mid-level planner using only local obstacle sensing
-       * The low-mid-level planner using only local obstacle sensing
-       * The low-level planner using the [ROS 2 Navigation2] DWBLocalPlanner
-
-     *  The mid- and low-level planners run concurrently as they try to follow the global path defined by the high-level planner.
+  *  The mid- and low-level planners run concurrently as they try to follow the global path defined by the high-level planner.
 
  *or*
 
- * `ros2 launch flex_nav_turtlebot3_demo_bringup pure_pursuit.launch.py`
-     * This version loads a defined patrol path based on static map
-     * Be sure to use `amcl.launch.py` for localization relative to known map locations for this demo
-     * The system uses basic pure pursuit path following node.
-     * This demo does NOT have obstacle avoidance, and is mainly to demonstrate `GetPathByName` and `PurePursuit` nodes.
-     * See CHANGELOG.rst for limitations of this demo
-     
+`ros2 launch flex_nav_turtlebot3_demo_bringup flex_four_level.launch.py`
+
+  * This version uses a 4-level planner as a demonstration.
+    * The high-level planner is based only on the static map
+    * The mid-level planner using only local obstacle sensing
+    * The low-mid-level planner using only local obstacle sensing
+    * The low-level planner using the [ROS 2 Navigation2] DWBLocalPlanner
+
+  *  The mid- and low-level planners run concurrently as they try to follow the global path defined by the high-level planner.
+
+ *or*
+
+`ros2 launch flex_nav_turtlebot3_demo_bringup pure_pursuit.launch.py`
+
+  * This version loads a defined patrol path based on static map
+    * Be sure to use either `fake` or `amcl` for localization relative to known map locations for this demo
+    * The system uses basic pure pursuit path following node.
+    * This demo does NOT have local obstacle avoidance, and is mainly to demonstrate `GetPathByName` and `PurePursuit` nodes.
+
+----
+
 ### FlexBE Operation
 After startup, all control is through the FlexBE App operator interface and RViz.  
 

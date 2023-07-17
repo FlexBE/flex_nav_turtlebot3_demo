@@ -36,6 +36,7 @@ install(DIRECTORY paths
 
 install(PROGRAMS
   scripts/fake_localization
+  scripts/test_listener
   DESTINATION lib/${PROJECT_NAME}
 )
 

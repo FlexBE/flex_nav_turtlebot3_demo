@@ -15,69 +15,60 @@
 # Author: David Conner
 
 import os
-import xacro
-import yaml
 
 from ament_index_python.packages import get_package_share_directory
-import launch
-import launch_ros.actions
 from launch import LaunchDescription
-from launch.actions import OpaqueFunction
-from launch.actions import SetLaunchConfiguration
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
-from launch_ros.parameter_descriptions import ParameterValue
 from nav2_common.launch import RewrittenYaml
+
 
 def generate_launch_description():
 
     bringup_dir = get_package_share_directory('flex_nav_turtlebot3_demo_bringup')
-    use_sim_time = LaunchConfiguration('use_sim_time', default='true') # For simulations
+    use_sim_time = LaunchConfiguration('use_sim_time', default='true')  # For simulations
     autostart = LaunchConfiguration('autostart', default='true')
 
     hlp_name = "high_level_planner"
-    gcm_name = 'global_costmap'
     llp_name = 'low_level_planner'
-    lcm_name = 'local_costmap'
     bhs_name = 'behavior_server'
 
-    lifecycle_nodes  = [ hlp_name, llp_name, bhs_name]
+    lifecycle_nodes = [hlp_name, llp_name, bhs_name]
 
     param_substitutions = {
         'use_sim_time': use_sim_time,
         'autostart': autostart}
 
     # Load the high_level planner and costmap params
-    high_level_params = RewrittenYaml(
-            source_file=os.path.join(bringup_dir, 'param', 'high_level_planner_params.yaml'),
-            root_key="",
-            param_rewrites=param_substitutions,
-            convert_types=True)
+    high_level_params = RewrittenYaml(source_file=os.path.join(bringup_dir,
+                                                               'param', 'high_level_planner_params.yaml'),
+                                      root_key="",
+                                      param_rewrites=param_substitutions,
+                                      convert_types=True)
 
-    global_costmap_params = RewrittenYaml(
-            source_file=os.path.join(bringup_dir, 'param', 'global_costmap_params.yaml'),
-            root_key="",
-            param_rewrites=param_substitutions,
-            convert_types=True)
+    global_costmap_params = RewrittenYaml(source_file=os.path.join(bringup_dir,
+                                                                   'param', 'global_costmap_params.yaml'),
+                                          root_key="",
+                                          param_rewrites=param_substitutions,
+                                          convert_types=True)
 
     # Low level controller params
-    low_level_params = RewrittenYaml(
-            source_file=os.path.join(bringup_dir, 'param', 'low_level_planner_params.yaml'),
-            root_key="",
-            param_rewrites=param_substitutions,
-            convert_types=True)
+    low_level_params = RewrittenYaml(source_file=os.path.join(bringup_dir,
+                                                              'param', 'low_level_planner_params.yaml'),
+                                     root_key="",
+                                     param_rewrites=param_substitutions,
+                                     convert_types=True)
 
-    local_costmap_params = RewrittenYaml(
-            source_file=os.path.join(bringup_dir, 'param', 'local_costmap_params.yaml'),
-            root_key="",
-            param_rewrites=param_substitutions,
-            convert_types=True)
+    local_costmap_params = RewrittenYaml(source_file=os.path.join(bringup_dir,
+                                                                  'param', 'local_costmap_params.yaml'),
+                                         root_key="",
+                                         param_rewrites=param_substitutions,
+                                         convert_types=True)
 
-    behavior_params = RewrittenYaml(
-            source_file=os.path.join(bringup_dir, 'param', 'behavior_server.yaml'),
-            root_key="",
-            param_rewrites=param_substitutions,
-            convert_types=True)
+    behavior_params = RewrittenYaml(source_file=os.path.join(bringup_dir, 'param', 'behavior_server.yaml'),
+                                    root_key="",
+                                    param_rewrites=param_substitutions,
+                                    convert_types=True)
 
     # Set up the nodes for launch
     high_level_planner_node = Node(package='flex_nav_planners',
@@ -85,13 +76,13 @@ def generate_launch_description():
                                    name=hlp_name,
                                    output='screen',
                                    parameters=[high_level_params, global_costmap_params],
-                                  )
+                                   )
 
     low_level_planner_node = Node(package='flex_nav_controllers',
-                                   executable='flex_nav_controllers_follow_path_node',
-                                   name=llp_name,
-                                   output='screen',
-                                   parameters=[low_level_params, local_costmap_params],
+                                  executable='flex_nav_controllers_follow_path_node',
+                                  name=llp_name,
+                                  output='screen',
+                                  parameters=[low_level_params, local_costmap_params],
                                   )
 
     behavior_server_node = Node(package='flex_nav_behaviors',
@@ -99,14 +90,14 @@ def generate_launch_description():
                                 name='behavior_server',
                                 output='screen',
                                 parameters=[behavior_params],
-                               )
+                                )
 
     lifecycle_manager = Node(package='nav2_lifecycle_manager',
-                              executable='lifecycle_manager',
-                              name='flex_lifecycle_manager',
-                              output='screen',
-                              #emulate_tty=True,  # https://github.com/ros2/launch/issues/188
-                              parameters=[{'use_sim_time': use_sim_time,
+                             executable='lifecycle_manager',
+                             name='flex_lifecycle_manager',
+                             output='screen',
+                             # emulate_tty=True,  # https://github.com/ros2/launch/issues/188
+                             parameters=[{'use_sim_time': use_sim_time,
                                           'autostart': autostart,
                                           'bond_timeout': 5.0,
                                           'node_names': lifecycle_nodes}])

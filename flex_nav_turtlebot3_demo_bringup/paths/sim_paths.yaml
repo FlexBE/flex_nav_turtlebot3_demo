@@ -8,7 +8,7 @@ sim_loop: # Demo path with 1 pose specified
         -   frame_id: ''  # Optional, will use one given above if missing or empty
             position:
                 x: -2.0
-                y:  0.0
+                y: -0.5
                 z:  0.0  # z-value is optional (z=0.0 by default)
             orientation: # Orientation is optional (just defaults to identity)
                 w: 1.0
@@ -39,13 +39,16 @@ sim_loop: # Demo path with 1 pose specified
         -   position:
                 x: -1.6
                 y: -1.0
+        -   position:
+                x: -2.0
+                y: -0.5
 sim_patrol: # Demo path
     frame_id: 'map'
     poses:
         -   frame_id: ''  # Optional, will use one given above if missing or empty
             position:
                 x: -2.0
-                y:  0.0
+                y: -0.5
                 z:  0.0  # z-value is optional (z=0.0 by default)
             orientation: # Orientation is optional (just defaults to identity)
                 w: 1.0
@@ -97,3 +100,6 @@ sim_patrol: # Demo path
         -   position:
                 x: -1.6
                 y: -1.0
+        -   position:
+                x: -2.0
+                y: -0.5

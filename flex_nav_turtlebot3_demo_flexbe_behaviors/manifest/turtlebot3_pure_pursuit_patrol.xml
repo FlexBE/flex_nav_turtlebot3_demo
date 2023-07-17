@@ -2,18 +2,18 @@
 
 <behavior name="Turtlebot3 Pure Pursuit Patrol">
 
-	<executable package_path="flex_nav_turtlebot3_demo_flexbe_behaviors.turtlebot3_pure_pursuit_patrol_sm" class="Turtlebot3PurePursuitPatrolSM" />
-	<tagstring>Flex_Nav</tagstring>
-	<author>David Conner</author>
-	<date>Mon 1-Aug-2022</date>
-	<description>
-		Uses Flexible Navigation to control the Turtlebot 3 robot using basic pure pursuit and pre-defined paths.  
-		Demonstrates using a PurePursuitState where FlexBE published command and FollowPath state using a PurePursuitPath node.
-	</description>
+    <executable package_path="flex_nav_turtlebot3_demo_flexbe_behaviors.turtlebot3_pure_pursuit_patrol_sm" class="Turtlebot3PurePursuitPatrolSM" />
+    <tagstring>Flex_Nav</tagstring>
+    <author>David Conner</author>
+    <date>Mon 1-Aug-2022</date>
+    <description>
+        Uses Flexible Navigation to control the Turtlebot 3 robot using basic pure pursuit and pre-defined paths.  
+        Demonstrates using a PurePursuitState where FlexBE published command and FollowPath state using a PurePursuitPath node.
+    </description>
 
 
-	<!-- Contained Behaviors -->
+    <!-- Contained Behaviors -->
 
-	<!-- Available Parameters -->
+    <!-- Available Parameters -->
 
 </behavior>

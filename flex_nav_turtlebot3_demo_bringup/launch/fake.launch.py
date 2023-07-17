@@ -15,30 +15,27 @@
 # Author: David Conner
 
 import os
-import yaml
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, SetEnvironmentVariable
 from launch_ros.actions import Node
 from launch.substitutions import LaunchConfiguration
-from nav2_common.launch import RewrittenYaml
 
 
 def generate_launch_description():
 
     map_dir = get_package_share_directory('turtlebot3_navigation2')
-    use_sim_time = LaunchConfiguration('use_sim_time', default='true') # For simulations
+    use_sim_time = LaunchConfiguration('use_sim_time', default='true')  # For simulations
     autostart = LaunchConfiguration('autostart', default='true')
-    namespace = LaunchConfiguration('namespace')
-
-    localization_name = "amcl" # fak name
+    timer_period_s = LaunchConfiguration('timer_period_s', default=0.0333)  # 30 hz
+    localization_name = "amcl"  # fak name
     ms_name = 'map_server'  # Presumes map server launched earlier
 
-    lifecycle_nodes  = [ ms_name]
+    lifecycle_nodes = [ms_name]
 
     param_substitutions = {
         'use_sim_time': use_sim_time,
-        'yaml_filename': os.path.join(map_dir, 'map', 'map.yaml'),}
+        'yaml_filename': os.path.join(map_dir, 'map', 'map.yaml')}
 
     remappings = [('/tf', 'tf'),
                   ('/tf_static', 'tf_static')]
@@ -56,7 +53,7 @@ def generate_launch_description():
             executable='fake_localization',
             name=localization_name,
             output='screen',
-            parameters=[], 
+            parameters=[{'timer_period_s': timer_period_s}],
             remappings=remappings),
 
         Node(

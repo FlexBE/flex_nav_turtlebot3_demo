@@ -2,21 +2,21 @@
 
 <behavior name="Turtlebot3 Four-Level Flex Planner">
 
-	<executable package_path="flex_nav_turtlebot3_demo_flexbe_behaviors.turtlebot3_four_level_flex_planner_sm" class="Turtlebot3FourLevelFlexPlannerSM" />
-	<tagstring>Flex_Nav</tagstring>
-	<author>Josh Zutell</author>
-	<date>Sat Jan 15 2022</date>
-	<description>
-		Uses Flexible Navigation to control the Turtlebot 3 robot with 4-level planning.
-			high-level: Map only
-			middle-level: Smaller map area with sensors
-			low-mid-level: Receives map from middle-level and performs another planning
-			low-level: sensors only
-	</description>
+    <executable package_path="flex_nav_turtlebot3_demo_flexbe_behaviors.turtlebot3_four_level_flex_planner_sm" class="Turtlebot3FourLevelFlexPlannerSM" />
+    <tagstring>Flex_Nav</tagstring>
+    <author>Josh Zutell</author>
+    <date>Sat Jan 15 2022</date>
+    <description>
+        Uses Flexible Navigation to control the Turtlebot 3 robot with 4-level planning.
+            high-level: Map only
+            middle-level: Smaller map area with sensors
+            low-mid-level: Receives map from middle-level and performs another planning
+            low-level: sensors only
+    </description>
 
 
-	<!-- Contained Behaviors -->
+    <!-- Contained Behaviors -->
 
-	<!-- Available Parameters -->
+    <!-- Available Parameters -->
 
 </behavior>

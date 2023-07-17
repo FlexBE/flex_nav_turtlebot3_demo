@@ -4,17 +4,17 @@ import os
 from glob import glob
 from setuptools import setup
 
-package_name = 'flex_nav_turtlebot3_demo_flexbe_behaviors'
+PACKAGE_NAME = 'flex_nav_turtlebot3_demo_flexbe_behaviors'
 
 setup(
-    name=package_name,
+    name=PACKAGE_NAME,
     version='0.0.1',
-    packages=[package_name],
+    packages=[PACKAGE_NAME],
     data_files=[
-        (os.path.join('share', package_name), glob('launch/*.launch.py')),
+        (os.path.join('share', PACKAGE_NAME), glob('launch/*.launch.py')),
         ('share/ament_index/resource_index/packages',
-            ['resource/' + package_name]),
-        ('share/' + package_name, ['package.xml']),
+            ['resource/' + PACKAGE_NAME]),
+        ('share/' + PACKAGE_NAME, ['package.xml']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -26,8 +26,8 @@ setup(
     entry_points={
         'console_scripts': [
             'turtlebot_flex_planner_sm = flex_nav_turtlebot3_demo_flexbe_behaviors.turtlebot_flex_planner_sm',
-            'turtlebot_multi_level_flex_planner_sm = flex_nav_turtlebot3_demo_flexbe_behaviors.turtlebot_multi_level_flex_planner_sm',
-            'turtlebot_simple_recovery_sm = flex_nav_turtlebot3_demo_flexbe_behaviors.turtlebot_simple_recovery_sm',
+            'turtlebot_multi_level_flex_planner_sm = flex_nav_turtlebot3_demo_flexbe_behaviors.turtlebot_multi_level_flex_planner_sm',  # noqa
+            'turtlebot_simple_recovery_sm = flex_nav_turtlebot3_demo_flexbe_behaviors.turtlebot_simple_recovery_sm',  # noqa
         ],
     },
 )
