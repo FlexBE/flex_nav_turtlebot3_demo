@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="3">
   <name>flex_nav_turtlebot3_demo_bringup</name>
-  <version>0.0.1</version>
+  <version>1.0.0</version>
   <description>Setup to demonstrate the FlexBE-based flexible_navigation setup using turtlebot3 setup</description>
   <maintainer email="robotics@cnu.edu">David Conner</maintainer>
   <license>BSD</license>
