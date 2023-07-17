@@ -7,6 +7,15 @@ mid_level_planner:
     planner_plugin: 'GridBased'
     GridBased:
       plugin: 'nav2_navfn_planner/NavfnPlanner'
+    smoother_type: 'SimpleSmoother'
+    simple_smoother:
+        tolerance: 5e-10
+        max_its: 500
+        w_data: 0.21
+        w_smooth: 0.31
+        do_refinement: true
+        refinement_num: 2
+        smoother_timeout: 0.5
 
 mid_level_planner_rclcpp_node:
   ros__parameters:

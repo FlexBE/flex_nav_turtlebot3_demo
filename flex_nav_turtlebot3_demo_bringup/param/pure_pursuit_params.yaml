@@ -5,12 +5,14 @@ pure_pursuit_node:
     target_frame: 'map'        # Expected frame of the path points (uses actual path frame)
     odom_frame:   'odom'       # Expected frame of odom messages (uses actual odom messages)
     robot_frame:  'base_link'  # Robot frame used for calculations (must be in TF tree with path frames and odom messages)
-    lookahead_distance: 0.2    # Look ahead distance (meters)
-    timeout:            0.09   # Timeout for TF buffer collection
+    lookahead_distance: 0.25   # Look ahead distance (meters)
+    timeout:            0.2    # Timeout for TF buffer collection (seconds)
     cmd_topic:  'cmd_vel'      # velocity command cmd_topic
     cmd_topic_stamped: 'cmd_vel_stamped'  # Optionally published a TwistStamped version as well
     odom_topic:   'odom'       # Odometry topic
-    marker_topic: 'pure_pursuit_marker'
+    marker_topic: 'pure_pursuit_markers'
     marker_size:  0.05         # Marker size in meters
     controller_frequency: 20.0 # Cmd publish frequency (Hz)
-    halt_on_completion:  false # False = continue to patrol by recycling path
+    halt_on_completion:  true  # False = continue to patrol by recycling path
+    halt_on_failure:     true  # False = continue to patrol by recycling path
+    halt_on_cancel:      true  # False = continue to patrol by recycling path

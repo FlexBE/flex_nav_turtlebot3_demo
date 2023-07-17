@@ -3,10 +3,19 @@ low_mid_level_planner:
     expected_planner_frequency: 20.0
     set_orientation: True      # Set intermediate orientations along path from simple 2D planner
     lookahead_distance: 1.0    # Distance in meters along path from robot for planner target
-    distance_threshold: 0.05   # Distance in meters from final position to determine success
+    distance_threshold: 0.20   # Distance in meters from final position to determine success
     planner_plugin: 'GridBased'
     GridBased:
       plugin: 'nav2_navfn_planner/NavfnPlanner'
+    smoother_type: 'SimpleSmoother'
+    simple_smoother:
+        tolerance: 5e-10
+        max_its: 200
+        w_data: 0.21
+        w_smooth: 0.31
+        do_refinement: true
+        refinement_num: 2
+        smoother_timeout: 0.2
 
 low_mid_level_planner_rclcpp_node:
   ros__parameters:
