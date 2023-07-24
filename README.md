@@ -64,10 +64,8 @@ The quickest and easiest method to get a demonstration up and running is to foll
 ## Operation
 ---------
 
-> NOTE: In 29-June-2022 Humble release, an issue with Navigation 2 results in an
-> empty local costmap. As a fix, you can change the default DDS provider.  
-> We added the following lines to our setup.bash
-
+> NOTE: An earlier release of Humble had an issue with Navigation 2 that resulted in an
+> empty local costmap. This issue seems to be resolved; at the time, a fix was to change the default DDS provider
 <pre>
   # Dealing with https://github.com/ros-planning/navigation2/issues/3014 (2489 and 3018)
   echo "Changing default DDS to Cyclone due to Nav 2 issue!"
