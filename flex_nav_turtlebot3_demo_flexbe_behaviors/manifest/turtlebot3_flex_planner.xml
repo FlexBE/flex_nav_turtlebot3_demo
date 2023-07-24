@@ -8,8 +8,9 @@
     <date>Sat Jan 15 2022</date>
     <description>
         Uses Flexible Navigation to control the Turtlebot 3 robot
-            high-level: Map only
-            low-level: sensors only controller to follow high-level path
+        high-level: Map only
+        low-level: sensors only controller to follow high-level path
+
     </description>
 
 

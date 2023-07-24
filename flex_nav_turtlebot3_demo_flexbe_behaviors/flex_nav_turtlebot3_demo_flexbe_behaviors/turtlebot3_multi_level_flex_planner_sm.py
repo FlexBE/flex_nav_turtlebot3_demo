@@ -1,34 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright 2023 Christopher Newport University
+# Copyright 2022 Josh Zutell
 #
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-#    * Redistributions of source code must retain the above copyright
-#      notice, this list of conditions and the following disclaimer.
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
-#    * Redistributions in binary form must reproduce the above copyright
-#      notice, this list of conditions and the following disclaimer in the
-#      documentation and/or other materials provided with the distribution.
-#
-#    * Neither the name of the Christopher Newport University nor the names of its
-#      contributors may be used to endorse or promote products derived from
-#      this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-# POSSIBILITY OF SUCH DAMAGE.
-
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 ###########################################################
 #               WARNING: Generated code!                  #
@@ -37,7 +22,20 @@
 # Only code inside the [MANUAL] tags will be kept.        #
 ###########################################################
 
-from flexbe_core import Behavior, Autonomy, OperatableStateMachine, ConcurrencyContainer, PriorityContainer, Logger
+"""
+Define Turtlebot3 Multi-Level Flex Planner.
+
+Created on Sat Jan 15 2022
+@author: Josh Zutell
+"""
+
+
+from flexbe_core import Autonomy
+from flexbe_core import Behavior
+from flexbe_core import ConcurrencyContainer
+from flexbe_core import Logger
+from flexbe_core import OperatableStateMachine
+from flexbe_core import PriorityContainer
 from flex_nav_flexbe_states.clear_costmaps_state import ClearCostmapsState
 from flex_nav_flexbe_states.follow_planner_state import FollowPlannerState
 from flex_nav_flexbe_states.follow_topic_state import FollowTopicState
@@ -45,29 +43,26 @@ from flex_nav_flexbe_states.get_path_state import GetPathState
 from flex_nav_flexbe_states.get_pose_state import GetPoseState
 from flexbe_states.log_state import LogState
 from flexbe_states.operator_decision_state import OperatorDecisionState
+
 # Additional imports can be added inside the following tags
 # [MANUAL_IMPORT]
 
 # [/MANUAL_IMPORT]
 
 
-"""
-Created on Sat Jan 15 2022
-@author: Josh Zutell
-"""
-
-
 class Turtlebot3MultiLevelFlexPlannerSM(Behavior):
     """
-    Use Flexible Navigation to control the Turtlebot 3 robot with 3-level planning.
+    Define Turtlebot3 Multi-Level Flex Planner.
 
+    Uses Flexible Navigation to control the Turtlebot 3 robot with 3-level planning.
     high-level: Map only
     mid-level: Smaller map area with sensors
     low-level: sensors only controller to follow mid-level path
+
     """
 
     def __init__(self, node):
-        super(Turtlebot3MultiLevelFlexPlannerSM, self).__init__()
+        super().__init__()
         self.name = 'Turtlebot3 Multi-Level Flex Planner'
 
         # parameters of this behavior
@@ -100,16 +95,15 @@ class Turtlebot3MultiLevelFlexPlannerSM(Behavior):
         # [MANUAL_CREATE]
 
         # [/MANUAL_CREATE]
-
         # x:424 y:58, x:407 y:123, x:413 y:197, x:564 y:309, x:552 y:388, x:557 y:453, x:189 y:520, x:45 y:524, x:123 y:521
-        _sm_container_0 = ConcurrencyContainer(outcomes=['finished', 'failed', 'canceled'], input_keys=['plan'],
-                                               conditions=[
-                                                   ('finished', [('MidLevel', 'done')]),
-                                                   ('finished', [('LowLevel', 'done')]),
-                                                   ('canceled', [('MidLevel', 'canceled')]),
-                                                   ('failed', [('MidLevel', 'failed')]),
-                                                   ('failed', [('LowLevel', 'failed')]),
-                                                   ('canceled', [('LowLevel', 'canceled')])])
+        _sm_container_0 = ConcurrencyContainer(outcomes=['finished', 'failed', 'canceled'], input_keys=['plan'], conditions=[
+            ('finished', [('MidLevel', 'done')]),
+            ('finished', [('LowLevel', 'done')]),
+            ('canceled', [('MidLevel', 'canceled')]),
+            ('failed', [('MidLevel', 'failed')]),
+            ('failed', [('LowLevel', 'failed')]),
+            ('canceled', [('LowLevel', 'canceled')])
+            ])
 
         with _sm_container_0:
             # x:109 y:63
@@ -191,8 +185,7 @@ class Turtlebot3MultiLevelFlexPlannerSM(Behavior):
 
             # x:875 y:162
             OperatableStateMachine.add('AutoReplan',
-                                       OperatorDecisionState(outcomes=["yes", "no"],
-                                                             hint="Re-plan to current goal?",
+                                       OperatorDecisionState(outcomes=["yes", "no"], hint="Re-plan to current goal?",
                                                              suggestion="yes"),
                                        transitions={'yes': 'Log Recovered', 'no': 'Continue'},
                                        autonomy={'yes': Autonomy.High, 'no': Autonomy.Full})

@@ -1,34 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# Copyright 2023 Christopher Newport University
+# Copyright 2022 David Conner
 #
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-#    * Redistributions of source code must retain the above copyright
-#      notice, this list of conditions and the following disclaimer.
+#     http://www.apache.org/licenses/LICENSE-2.0
 #
-#    * Redistributions in binary form must reproduce the above copyright
-#      notice, this list of conditions and the following disclaimer in the
-#      documentation and/or other materials provided with the distribution.
-#
-#    * Neither the name of the Christopher Newport University nor the names of its
-#      contributors may be used to endorse or promote products derived from
-#      this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
-# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-# POSSIBILITY OF SUCH DAMAGE.
-
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 ###########################################################
 #               WARNING: Generated code!                  #
@@ -37,7 +22,20 @@
 # Only code inside the [MANUAL] tags will be kept.        #
 ###########################################################
 
-from flexbe_core import Behavior, Autonomy, OperatableStateMachine, ConcurrencyContainer, PriorityContainer, Logger
+"""
+Define Turtlebot3 Pure Pursuit Patrol.
+
+Created on Mon 1-Aug-2022
+@author: David Conner
+"""
+
+
+from flexbe_core import Autonomy
+from flexbe_core import Behavior
+from flexbe_core import ConcurrencyContainer
+from flexbe_core import Logger
+from flexbe_core import OperatableStateMachine
+from flexbe_core import PriorityContainer
 from flex_nav_flexbe_states.follow_path_state import FollowPathState
 from flex_nav_flexbe_states.get_path_by_name_state import GetPathByNameState
 from flex_nav_flexbe_states.pure_pursuit_state import PurePursuitState
@@ -45,27 +43,24 @@ from flex_nav_flexbe_states.set_indice_state import SetIndiceState
 from flex_nav_flexbe_states.timed_stop_state import TimedStopState
 from flexbe_states.log_state import LogState
 from flexbe_states.operator_decision_state import OperatorDecisionState
+
 # Additional imports can be added inside the following tags
 # [MANUAL_IMPORT]
 
 # [/MANUAL_IMPORT]
 
 
-"""
-Created on Mon 1-Aug-2022
-@author: David Conner
-"""
-
-
 class Turtlebot3PurePursuitPatrolSM(Behavior):
     """
-    Use Flexible Navigation to control the Turtlebot 3 robot using basic pure pursuit and pre-defined paths.
+    Define Turtlebot3 Pure Pursuit Patrol.
 
+    Uses Flexible Navigation to control the Turtlebot 3 robot using basic pure pursuit and pre-defined paths.
     Demonstrates using a PurePursuitState where FlexBE published command and FollowPath state using a PurePursuitPath node.
+
     """
 
     def __init__(self, node):
-        super(Turtlebot3PurePursuitPatrolSM, self).__init__()
+        super().__init__()
         self.name = 'Turtlebot3 Pure Pursuit Patrol'
 
         # parameters of this behavior
@@ -90,9 +85,6 @@ class Turtlebot3PurePursuitPatrolSM(Behavior):
 
         # Behavior comments:
 
-        # O 1005 367
-        # Log loop has done/continue transition coincident
-
     def create(self):
         # x:97 y:468, x:1167 y:605
         _state_machine = OperatableStateMachine(outcomes=['finished', 'failed'])
@@ -101,12 +93,10 @@ class Turtlebot3PurePursuitPatrolSM(Behavior):
         # [MANUAL_CREATE]
 
         # [/MANUAL_CREATE]
-
         with _state_machine:
             # x:151 y:48
             OperatableStateMachine.add('Continue',
-                                       OperatorDecisionState(outcomes=["patrol", "loop", "quit"],
-                                                             hint="Continue patrolling ?",
+                                       OperatorDecisionState(outcomes=["patrol", "loop", "quit"], hint="Continue patrolling ?",
                                                              suggestion="patrol"),
                                        transitions={'patrol': 'GetPath', 'loop': 'GetLoop', 'quit': 'finished'},
                                        autonomy={'patrol': Autonomy.High, 'loop': Autonomy.Full, 'quit': Autonomy.Full})
@@ -194,8 +184,8 @@ class Turtlebot3PurePursuitPatrolSM(Behavior):
 
             # x:799 y:578
             OperatableStateMachine.add('Stop',
-                                       TimedStopState(timeout=0.25, cmd_topic='cmd_vel',
-                                                      odom_topic='odom', cmd_topic_stamped=""),
+                                       TimedStopState(timeout=0.25, cmd_topic='cmd_vel', odom_topic='odom',
+                                                      cmd_topic_stamped=""),
                                        transitions={'done': 'Log Success', 'failed': 'EStop'},
                                        autonomy={'done': Autonomy.Off, 'failed': Autonomy.Off})
 

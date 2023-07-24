@@ -8,9 +8,10 @@
     <date>Sat Jan 15 2022</date>
     <description>
         Uses Flexible Navigation to control the Turtlebot 3 robot with 3-level planning.
-            high-level: Map only
-            mid-level: Smaller map area with sensors
-            low-level: sensors only controller to follow mid-level path
+        high-level: Map only
+        mid-level: Smaller map area with sensors
+        low-level: sensors only controller to follow mid-level path
+
     </description>
 
 
